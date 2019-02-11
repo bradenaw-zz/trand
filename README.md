@@ -1,5 +1,7 @@
 # `trand`
 
+[![GoDoc](https://godoc.org/github.com/bradenaw/trand?status.svg)](https://godoc.org/github.com/bradenaw/trand)
+
 Provides utilities for deterministic randomized tests.
 
 At the moment, only has one function (`RandomN()`), used like this:
