@@ -5,10 +5,13 @@ import (
 	"flag"
 	"fmt"
 	"math/rand"
+	"os"
 	"testing"
+	"time"
 )
 
 var flagSeed int64
+var seedGen *rand.Rand
 
 func init() {
 	flag.Int64Var(
@@ -18,6 +21,7 @@ func init() {
 		"If specified, run trand tests only with the given seed. Useful for re-running particular "+
 			"failures.",
 	)
+	seedGen = rand.New(rand.NewSource(int64(os.Getpid()) ^ time.Now().UnixNano()))
 }
 
 // Runs the given test f n times with a different seed each time. f should be deterministic, so that
@@ -44,7 +48,7 @@ func run(t *testing.T, seed int64, f func(t *testing.T, r *rand.Rand)) {
 
 func newSeed() int64 {
 	for {
-		seed := rand.Int63()
+		seed := seedGen.Int63()
 		// Just to be safe, since 0 means not set for flagSeed.
 		if seed != 0 {
 			return seed
